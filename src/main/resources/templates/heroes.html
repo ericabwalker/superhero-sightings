@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <div th:replace="fragments/htmlHead"></div>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #C52525;">
+            <button aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"
+                    data-target="#navbarNavAltMarkup" data-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="/sightings">Sightings</a>
+                    <a class="nav-item nav-link active" href="#">Heroes</a>
+                    <a class="nav-item nav-link" href="/orgs">Orgs</a>
+                    <a class="nav-item nav-link" href="/locations">Locations</a>
+                </div>
+            </div>
+
+        </nav>
+        <h1>Superhero Sightings</h1>
+        <hr>
+    </header>
+    <!-- Main Body of Page -->
+    <div class="container">
+        <div class="col-lg-12">
+            <div>
+                <form action="addHero" method="POST">
+                    <div class="form-group row">
+                        <label for="heroName" class="col-sm-2 col-form-label">Hero Name:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="heroName" class="form-control" id="heroName" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="heroDescription" class="col-sm-2">Description:</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" name="heroDescription" id="heroDescription" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="superPower" class="col-sm-2 col-form-label">Superpower:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="superPower" class="form-control" id="superPower" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="heroStatus" class="col-sm-2 col-form-label">
+                            Hero Status:</label>
+                        <div class="col-6">
+                            <select id="heroStatus" name="heroStatus" class="form-control" >
+                                <option th:value="-1">Select a status</option>
+                                <option th:value="SH">Superhero</option>
+                                <option th:value="SV">Supervillain</option>        
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row text-center">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-outline-dark">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="container">
+                <div class="col-lg-12">
+                    <table id="table_id" class="display">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Hero Name</th>
+                                <th>Hero Description</th>
+                                <th>Superpower</th>
+                                <th>Status</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="hero : ${heroes}">
+                                <td th:text="${hero.heroID}">Hero ID</td>
+                                <td th:text="${hero.heroName}">Hero Name</td>
+                                <td th:text="${hero.heroDescription}">Hero Description</td>
+                                <td th:text="${hero.superPower}">Hero Superpower</td>
+                                <td th:text="${hero.heroStatus}">Hero Status</td>
+                                <td><a th:href="@{/editHero(heroID=${hero.heroID})}">Edit</a></td>
+                                <td>
+                                    <form th:action="@{deleteHero} + '?heroID=' + ${hero.heroID}" method="POST">
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End main body -->
+
+    <footer class="main-footer"></footer>
+    <div th:replace="fragments/endScripts"></div>
+    <script>
+        $(document).ready( function () {
+        $('table').DataTable();
+        } );
+    </script>     
+</body>
+</html>
+

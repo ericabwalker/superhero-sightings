@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <div th:replace="fragments/htmlHead"></div>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #C52525;">
+            <button aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"
+                    data-target="#navbarNavAltMarkup" data-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="/sightings">Sightings</a>
+                    <a class="nav-item nav-link active" href="/heroes">Heroes</a>
+                    <a class="nav-item nav-link" href="/orgs">Orgs</a>
+                    <a class="nav-item nav-link" href="/locations">Locations</a>
+                </div>
+            </div>
+
+        </nav>
+        <h1>Superhero Sightings</h1>
+        <hr>
+    </header>
+    <!-- Main Body of Page -->
+    <div class="container">
+        <div class="row m-4">
+            <div class="col-3 text-center m-3">
+                <span class="h3">Edit Hero</span>
+            </div>
+            <div class="col-7 text-center m-3">
+                <form action="editHero" method="POST">
+                    <div class="form-group row">
+                        <label for="heroName" class="col-3 col-form-label">
+                            Hero Name:</label>
+                        <div class="col-9">
+                            <input type="text" name="heroName" id="heroName" 
+                                   class="form-control" th:value="${hero.heroName}"/>
+                            <div th:if="${#fields.hasErrors('hero.heroName')}">
+                                <p th:each="error: ${#fields.errors('hero.heroName')}" class="alert alert-danger"
+                                   th:text="${error}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="heroDescription" class="col-3 col-form-label">
+                            Hero Description:</label>
+                        <div class="col-9">
+                            <input type="text" name="heroDescription" id="heroDescription" 
+                                   class="form-control"  th:value="${hero.heroDescription}"/>
+                            <div th:if="${#fields.hasErrors('hero.heroDescription')}">
+                                <p th:each="error: ${#fields.errors('hero.heroDescription')}" class="alert alert-danger"
+                                   th:text="${error}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="superPower" class="col-3 col-form-label">
+                            Superpower:</label>
+                        <div class="col-9">
+                            <input type="text" name="superPower" id="superPower" 
+                                   class="form-control" th:value="${hero.superPower}">
+                            <div th:if="${#fields.hasErrors('hero.superPower')}">
+                                <p th:each="error: ${#fields.errors('hero.superPower')}" class="alert alert-danger"
+                                   th:text="${error}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="heroStatus" class="col-sm-2 col-form-label">
+                            Hero Status:</label>
+                        <div class="col-6">
+                            <div th:if="${#fields.hasErrors('hero.heroStatus')}">
+                                <p th:each="error : ${#fields.errors('hero.heroStatus')}" class="alert alert-danger" th:text="${error}"></p>
+                            </div>
+                            <select id="heroStatus" name="heroStatus" class="form-control" th:field="*{hero.heroStatus}">
+                                <option th:value="-1">Select a status</option>
+                                <option th:value="SH">Superhero</option>
+                                <option th:value="SV">Supervillain</option>        
+                            </select>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="heroID" th:value="${hero.heroID}"/>
+                    <button type="submit" class="btn btn-outline-dark">
+                        Update Hero</button>
+                </form>
+            </div>
+        </div>
+    </div> 
+    <!-- End main body -->
+
+    <footer class="main-footer"></footer>
+    <div th:replace="fragments/endScripts"></div>
+</body>
+</html>
+

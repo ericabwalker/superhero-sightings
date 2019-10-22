@@ -1,0 +1,97 @@
+<div class="form-group row">
+    <label for="orgName" class="col-sm-2 col-form-label">Org Name:</label>
+    <div class="col-sm-6">
+        <div th:if="${#fields.hasErrors('orgRequest.orgName')}">
+            <p th:each="error : ${#fields.errors('orgRequest.orgName')}" class="alert alert-danger" th:text="${error}"></p>
+        </div>
+        <input type="text" name="orgName" class="form-control" id="orgName" th:field="*{orgRequest.orgName}">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="orgDescrip" class="col-sm-2">Description:</label>
+    <div class="col-sm-6">
+        <div th:if="${#fields.hasErrors('orgRequest.orgDescrip')}">
+            <p th:each="error : ${#fields.errors('orgRequest.orgDescrip')}" class="alert alert-danger" th:text="${error}"></p>
+        </div>
+        <textarea class="form-control" name="orgDescrip" id="orgDescrip" rows="3" th:text="*{orgRequest.orgDescrip}"></textarea>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="orgPhone" class="col-sm-2 col-form-label">Phone:</label>
+    <div class="col-sm-6">
+        <div th:if="${#fields.hasErrors('orgRequest.orgPhone')}">
+            <p th:each="error : ${#fields.errors('orgRequest.orgPhone')}" class="alert alert-danger" th:text="${error}"></p>
+        </div>
+        <input type="text" name="orgPhone" class="form-control" id="orgPhone" th:field="*{orgRequest.orgPhone}">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="orgEmail" class="col-sm-2 col-form-label">Email:</label>
+    <div class="col-sm-6">
+        <div th:if="${#fields.hasErrors('orgRequest.orgEmail')}">
+            <p th:each="error : ${#fields.errors('orgRequest.orgEmail')}" class="alert alert-danger" th:text="${error}"></p>
+        </div>
+        <input type="text" name="orgEmail" class="form-control" id="orgEmail" th:field="*{orgRequest.orgEmail}">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="orgStatus" class="col-sm-2 col-form-label">
+        Org Status:</label>
+    <div class="col-6">
+        <div th:if="${#fields.hasErrors('orgRequest.orgStatus')}">
+            <p th:each="error : ${#fields.errors('orgRequest.orgStatus')}" class="alert alert-danger" th:text="${error}"></p>
+        </div>
+        <select id="orgStatus" name="orgStatus" class="form-control" th:field="*{orgRequest.orgStatus}">
+            <option th:value="-1">Select a status</option>
+            <option value="SH">Superhero</option>
+            <option value="SV">Supervillain</option>        
+        </select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="locations" class="col-sm-2 col-form-label">
+        Location:</label>
+    <div class="col-6">
+        <div th:if="${#fields.hasErrors('orgRequest.locationID')}">
+            <p th:each="error : ${#fields.errors('orgRequest.locationID')}" class="alert alert-danger"
+               th:text="${error}"></p>
+        </div>
+        <select id="locations" name="locationID" class="form-control" th:field="*{orgRequest.locationID}">
+            <option th:value="-1">Select a location</option>
+            <option th:each="location : ${locations}" 
+                    th:value="${location.locationID}" 
+                    th:text="${location.locationName}">
+                Location Name:</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="heroes" class="col-sm-2 col-form-label">
+        Members:</label>
+    <div class="col-6">
+        <div th:if="${#fields.hasErrors('orgRequest.heroIDs')}">
+            <p th:each="error : ${#fields.errors('orgRequest.heroIDs')}" class="alert alert-danger"
+               th:text="${error}"></p>
+        </div>
+        <select multiple id="heroes" name="heroID" 
+                class="form-control" th:field="*{orgRequest.heroIDs}">
+            <option th:each="hero : ${heroes}" 
+                    th:value="${hero.heroID}" 
+                    th:text="${hero.heroName}">
+                Hero Name:</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group row text-center">
+    <div class="col-sm-10">
+        <input type="hidden" name="orgID" th:value="${orgRequest.orgID}"/>
+        <button type="submit" class="btn btn-outline-dark">Submit</button>
+    </div>
+</div>

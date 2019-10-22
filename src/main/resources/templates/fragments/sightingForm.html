@@ -1,0 +1,51 @@
+<div class="form-group row">
+    <label for="sightingDate" class="col-sm-2 col-form-label">Sighting Date:</label>
+    <div class="col-sm-6">
+        <div th:if="${#fields.hasErrors('sightingRequest.sightingDate')}">
+            <p th:each="error : ${#fields.errors('sightingRequest.sightingDate')}" class="alert alert-danger">Please enter a date, YYYY/MM/DD.</p>
+        </div>
+        <input type="text" name="sightingDate" class="form-control" id="sightingDate" th:value="${#dates.format(sightingRequest.sightingDate, 'yyyy/MM/dd')}">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="locations" class="col-sm-2 col-form-label">
+        Location:</label>
+    <div class="col-9">
+        <div th:if="${#fields.hasErrors('sightingRequest.locationID')}">
+            <p th:each="error : ${#fields.errors('sightingRequest.locationID')}" class="alert alert-danger" th:text="${error}"></p>
+        </div>
+        <select id="locations" name="locationID" class="form-control" th:field="*{sightingRequest.locationID}">
+            <option th:value="-1">Select a location</option>
+            <option th:each="location : ${locations}" 
+                    th:value="${location.locationID}" 
+                    th:text="${location.locationName}"
+                Location Name:</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="heroes" class="col-sm-2 col-form-label">
+        Hero:</label>
+    <div class="col-9">
+        <div th:if="${#fields.hasErrors('sightingRequest.heroID')}">
+            <p th:each="error : ${#fields.errors('sightingRequest.heroID')}" class="alert alert-danger" th:text="${error}"></p>
+        </div>
+        <select multiple id="heroes" name="heroID" 
+                class="form-control" th:field="*{sightingRequest.heroID}">
+            <option th:each="hero : ${heroes}" 
+                    th:value="${hero.heroID}" 
+                    th:text="${hero.heroName}"
+                    th:selected="${sightingRequest.heroID == hero.heroID}">
+                Hero Name:</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group row text-center">
+    <div class="col-sm-10">
+        <input type="hidden" name="sightingID" th:value="${sightingRequest.sightingID}"/>
+        <button type="submit" class="btn btn-outline-dark">Submit</button>
+    </div>
+</div>

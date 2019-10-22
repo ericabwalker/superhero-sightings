@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <div th:replace="fragments/htmlHead"></div>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #C52525;">
+            <button aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"
+                    data-target="#navbarNavAltMarkup" data-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="/sightings">Sightings</a>
+                    <a class="nav-item nav-link" href="/heroes">Heroes</a>
+                    <a class="nav-item nav-link" href="/orgs">Orgs</a>
+                    <a class="nav-item nav-link active" href="#">Locations</a>
+                </div>
+            </div>
+
+        </nav>
+        <h1>Superhero Sightings</h1>
+        <hr>
+    </header>
+    <!-- Main Body of Page -->
+    <div class="container">
+        <div class="col-lg-12">
+            <div>
+                <form action="addLocation" method="POST">
+                    <div class="form-group row">
+                        <label for="locationName" class="col-sm-2 col-form-label">Location Name:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="locationName" class="form-control" id="locationName" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="locationDescrip" class="col-sm-2">Description:</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" name="locationDescrip" id="locationDescrip" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="street1" class="col-sm-2 col-form-label">Street 1:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="street1" class="form-control" id="street1" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="street2" class="col-sm-2 col-form-label">Street 2:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="street2" class="form-control" id="street2" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="city" class="col-sm-2 col-form-label">City:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="city" class="form-control" id="city" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="state" class="col-sm-2 col-form-label">State:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="state" class="form-control" id="state" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="zipcode" class="col-sm-2 col-form-label">Zip code:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="zipcode" class="form-control" id="zipcode" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="country" class="col-sm-2 col-form-label">Country:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="country" class="form-control" id="country" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="locationLat" class="col-sm-2 col-form-label">Latitude:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="locationLat" class="form-control" id="locationLat" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="locationLong" class="col-sm-2 col-form-label">Longitude:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="locationLong" class="form-control" id="locationLong" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row text-center">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-outline-dark">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="text-center">
+
+                    <table id="table_id" class="display">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Location Name</th>
+                                <th>Location Description</th>
+                                <th>Street 1</th>
+                                <th>Street 2</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Zip code</th>
+                                <th>Country</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="location : ${locations}">
+                                <td th:text="${location.locationID}">Location ID</td>
+                                <td th:text="${location.locationName}">Location Name</td>
+                                <td th:text="${location.locationDescrip}">Location Description</td>
+                                <td th:text="${location.street1}">Street 1</td>
+                                <td th:text="${location.street2}">Street 2</td>
+                                <td th:text="${location.city}">City</td>
+                                <td th:text="${location.state}">State</td>
+                                <td th:text="${location.zipcode}">Zip code</td>
+                                <td th:text="${location.country}">Country</td>
+                                <td th:text="${location.locationLat}">Latitude</td>
+                                <td th:text="${location.locationLong}">Longitude</td>      
+                                <td><a th:href="@{/editLocation(locationID=${location.locationID})}">Edit</a></td>
+                                <td>
+                                    <form th:action="@{deleteLocation} + '?locationID=' + ${location.locationID}" method="POST">
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End main body -->
+
+    <footer class="main-footer"></footer>
+    <div th:replace="fragments/endScripts"></div>
+    <script>
+        $(document).ready( function () {
+        $('table').DataTable({
+        responsive: true});
+        } );
+    </script> 
+</body>
+</html>
+
+<!--
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/r-2.2.3/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/r-2.2.3/datatables.min.js"></script>-->

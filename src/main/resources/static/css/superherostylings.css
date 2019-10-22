@@ -1,0 +1,49 @@
+.main-footer {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-bottom: 10px solid #C52525;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Bangers', cursive;
+    font-size: 4.625rem;
+}
+
+h3 {
+    font-family: 'Bangers', cursive;
+    font-size: 2.625rem;
+}
+
+#navbar {
+    font-family: 'Roboto', sans-serif;
+}
+
+#maskIcon {
+    color: #C52525;
+}
+
+.formdiv {
+    display: inline-block;
+}
+
+a:hover {
+
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+body {
+    padding-bottom: 50px;
+}
+
+
+

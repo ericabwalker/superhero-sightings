@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <div th:replace="fragments/htmlHead"></div>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #C52525;">
+            <button aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"
+                    data-target="#navbarNavAltMarkup" data-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="/sightings">Sightings</a>
+                    <a class="nav-item nav-link" href="/heroes">Heroes</a>
+                    <a class="nav-item nav-link active" href="#">Orgs</a>
+                    <a class="nav-item nav-link" href="/locations">Locations</a>
+                </div>
+            </div>
+
+        </nav>
+        <h1>Superhero Sightings</h1>
+        <hr>
+    </header>
+    <!-- Main Body of Page -->
+    <div class="container">
+        <div class="col-lg-12">
+            <div>
+                <form action="addOrg" method="POST">
+                    <div class="form-group row">
+                        <label for="orgName" class="col-sm-2 col-form-label">Org Name:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="orgName" class="form-control" id="orgName" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="orgDescrip" class="col-sm-2">Description:</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" name="orgDescrip" id="orgDescrip" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="orgPhone" class="col-sm-2 col-form-label">Phone:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="orgPhone" class="form-control" id="orgPhone" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="orgEmail" class="col-sm-2 col-form-label">Email:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="orgEmail" class="form-control" id="orgEmail" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="orgStatus" class="col-sm-2 col-form-label">
+                            Org Status:</label>
+                        <div class="col-6">
+                            <select id="orgStatus" name="orgStatus" class="form-control" >
+                                <option th:value="-1">Select a status</option>
+                                <option value="SH">Superhero</option>
+                                <option value="SV">Supervillain</option>        
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="locations" class="col-sm-2 col-form-label">
+                            Location:</label>
+                        <div class="col-6">
+                            <select id="locations" name="locationID" class="form-control" >
+                                <option th:value="-1">Select a location</option>
+                                <option th:each="location : ${locations}" 
+                                        th:value="${location.locationID}" 
+                                        th:text="${location.locationName}">
+                                    Location Name:</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="heroes" class="col-sm-2 col-form-label">
+                            Members:</label>
+                        <div class="col-6">
+                            <select multiple id="heroes" name="heroIDs" 
+                                    class="form-control">
+                                <option th:each="hero : ${heroes}" 
+                                        th:value="${hero.heroID}" 
+                                        th:text="${hero.heroName}">
+                                    Hero Name:</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row text-center">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-outline-dark">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="col text-center m-3">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Org Name</th>
+                                <th>Org Description</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Location</th>
+                                <th>Members</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="org : ${orgs}">
+                                <td th:text="${org.orgID}">Org ID</td>
+                                <td th:text="${org.orgName}">Org Name</td>
+                                <td th:text="${org.orgDescrip}">Org Description</td>
+                                <td th:text="${org.orgPhone}">Phone</td>
+                                <td th:text="${org.orgEmail}">Email</td>
+                                <td th:text="${org.orgStatus}">Org Status</td>
+                                <td th:text="${org.location.locationName}">Location</td>
+                                <td> <span th:each="member : ${org.members}" th:text="${member.heroName}" style="display:block"></span></td>
+                                <td><a th:href="@{/editOrg(orgID=${org.orgID})}">Edit</a></td>
+                                <td>
+                                    <form th:action="@{deleteOrg} + '?orgID=' + ${org.orgID}" method="POST">
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End main body -->
+
+    <footer class="main-footer"></footer>
+    <div th:replace="fragments/endScripts"></div>
+    <script>
+        $(document).ready( function () {
+        $('table').DataTable();
+        } );
+    </script>
+</body>
+</html>
+
+
